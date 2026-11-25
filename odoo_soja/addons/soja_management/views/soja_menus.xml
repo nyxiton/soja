@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_soja_web_app" model="ir.actions.act_url">
+        <field name="name">Interface SOJA</field>
+        <field name="url">/soja</field>
+        <field name="target">self</field>
+    </record>
+
+    <menuitem id="menu_soja_root" name="SOJA" action="action_soja_exploitation" sequence="10"/>
+    <menuitem id="menu_soja_web_app" name="Interface SOJA" parent="menu_soja_root" action="action_soja_web_app" sequence="1"/>
+    <menuitem id="menu_soja_producers" name="Producteurs" parent="menu_soja_root" action="action_soja_producer" sequence="10"/>
+    <menuitem id="menu_soja_exploitations" name="Exploitations" parent="menu_soja_root" action="action_soja_exploitation" sequence="15"/>
+    <menuitem id="menu_soja_harvest_products" name="Saisons de récolte" parent="menu_soja_root" action="action_soja_harvest_product" sequence="18"/>
+    <menuitem id="menu_soja_harvests" name="Semences et récoltes" parent="menu_soja_root" action="action_soja_harvest" sequence="20"/>
+    <menuitem id="menu_soja_stock_quant" name="Stocks Inventaire" parent="menu_soja_root" action="action_soja_stock_quant" sequence="25"/>
+    <menuitem id="menu_soja_bank_dossiers" name="Dossiers bancaires" parent="menu_soja_root" action="action_soja_bank_dossiers" sequence="27"/>
+    <menuitem id="menu_soja_stock_quant_inventory" name="Stocks SOJA par exploitation" parent="stock.menu_stock_inventory_control" action="action_soja_stock_quant" sequence="97"/>
+    <menuitem id="menu_soja_partners" name="Vues partenaires" parent="menu_soja_root" sequence="30"/>
+    <menuitem id="menu_soja_cooperative" name="Cooperative" parent="menu_soja_partners" action="action_soja_cooperative" sequence="10"/>
+    <menuitem id="menu_soja_factory" name="Usine" parent="menu_soja_partners" action="action_soja_factory" sequence="20"/>
+    <menuitem id="menu_soja_bank" name="Banque" parent="menu_soja_partners" action="action_soja_bank" sequence="30"/>
+</odoo>

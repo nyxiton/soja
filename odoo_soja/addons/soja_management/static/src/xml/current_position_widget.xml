@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="soja_management.CurrentPositionField">
+        <div class="o_soja_current_position">
+            <span class="o_soja_point_sequence" t-esc="sequenceLabel"/>
+            <button class="btn btn-link p-0 o_soja_geo_button"
+                    type="button"
+                    t-att-disabled="state.locating"
+                    t-on-click.stop.prevent="capturePosition">
+                <i class="fa fa-location-arrow me-1"/>
+                <span t-if="!state.locating">Position pour recalcul de surface</span>
+                <span t-if="state.locating">Recherche...</span>
+            </button>
+        </div>
+    </t>
+</templates>

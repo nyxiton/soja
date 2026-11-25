@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="soja_crm_stage_received" model="crm.stage">
+        <field name="name">Dossier reçu</field>
+        <field name="sequence">10</field>
+    </record>
+    <record id="soja_crm_stage_risk" model="crm.stage">
+        <field name="name">Analyse risque</field>
+        <field name="sequence">20</field>
+    </record>
+    <record id="soja_crm_stage_proposal" model="crm.stage">
+        <field name="name">Proposition financement</field>
+        <field name="sequence">30</field>
+    </record>
+    <record id="soja_crm_stage_approved" model="crm.stage">
+        <field name="name">Approuvé</field>
+        <field name="sequence">40</field>
+        <field name="fold">1</field>
+    </record>
+    <record id="soja_crm_stage_refused" model="crm.stage">
+        <field name="name">Refusé</field>
+        <field name="sequence">50</field>
+        <field name="fold">1</field>
+    </record>
+    <record id="soja_crm_stage_pending" model="crm.stage">
+        <field name="name">Décision en attente</field>
+        <field name="sequence">60</field>
+    </record>
+</odoo>

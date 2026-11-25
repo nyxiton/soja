@@ -1,0 +1,38 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_soja_partner_manager,res.partner soja manager,base.model_res_partner,soja_management.group_soja_manager,1,1,1,1
+access_soja_partner_producer,res.partner soja producer,base.model_res_partner,soja_management.group_soja_producer,1,1,1,0
+access_soja_partner_cooperative,res.partner soja cooperative,base.model_res_partner,soja_management.group_soja_cooperative,1,0,0,0
+access_soja_partner_factory,res.partner soja factory,base.model_res_partner,soja_management.group_soja_factory,1,0,0,0
+access_soja_partner_bank,res.partner soja bank,base.model_res_partner,soja_management.group_soja_bank,1,0,0,0
+access_soja_exploitation_manager,soja.exploitation manager,model_soja_exploitation,soja_management.group_soja_manager,1,1,1,1
+access_soja_plot_point_manager,soja.plot.point manager,model_soja_plot_point,soja_management.group_soja_manager,1,1,1,1
+access_soja_harvest_manager,soja.harvest manager,model_soja_harvest,soja_management.group_soja_manager,1,1,1,1
+access_soja_harvest_forecast_history_manager,soja.harvest.forecast.history manager,model_soja_harvest_forecast_history,soja_management.group_soja_manager,1,1,1,1
+access_soja_exploitation_producer,soja.exploitation producer,model_soja_exploitation,soja_management.group_soja_producer,1,1,1,0
+access_soja_plot_point_producer,soja.plot.point producer,model_soja_plot_point,soja_management.group_soja_producer,1,1,1,0
+access_soja_harvest_producer,soja.harvest producer,model_soja_harvest,soja_management.group_soja_producer,1,1,1,0
+access_soja_harvest_forecast_history_producer,soja.harvest.forecast.history producer,model_soja_harvest_forecast_history,soja_management.group_soja_producer,1,0,0,0
+access_soja_exploitation_cooperative,soja.exploitation cooperative,model_soja_exploitation,soja_management.group_soja_cooperative,1,0,0,0
+access_soja_plot_point_cooperative,soja.plot.point cooperative,model_soja_plot_point,soja_management.group_soja_cooperative,1,0,0,0
+access_soja_harvest_cooperative,soja.harvest cooperative,model_soja_harvest,soja_management.group_soja_cooperative,1,1,0,0
+access_soja_harvest_forecast_history_cooperative,soja.harvest.forecast.history cooperative,model_soja_harvest_forecast_history,soja_management.group_soja_cooperative,1,0,0,0
+access_soja_exploitation_factory,soja.exploitation factory,model_soja_exploitation,soja_management.group_soja_factory,1,0,0,0
+access_soja_plot_point_factory,soja.plot.point factory,model_soja_plot_point,soja_management.group_soja_factory,1,0,0,0
+access_soja_harvest_factory,soja.harvest factory,model_soja_harvest,soja_management.group_soja_factory,1,1,0,0
+access_soja_harvest_forecast_history_factory,soja.harvest.forecast.history factory,model_soja_harvest_forecast_history,soja_management.group_soja_factory,1,0,0,0
+access_soja_exploitation_bank,soja.exploitation bank,model_soja_exploitation,soja_management.group_soja_bank,1,0,0,0
+access_soja_plot_point_bank,soja.plot.point bank,model_soja_plot_point,soja_management.group_soja_bank,1,0,0,0
+access_soja_harvest_bank,soja.harvest bank,model_soja_harvest,soja_management.group_soja_bank,1,1,0,0
+access_soja_harvest_forecast_history_bank,soja.harvest.forecast.history bank,model_soja_harvest_forecast_history,soja_management.group_soja_bank,1,0,0,0
+access_soja_storage_info_manager,soja.storage.info manager,model_soja_storage_info,soja_management.group_soja_manager,1,1,1,1
+access_soja_treatment_info_manager,soja.treatment.info manager,model_soja_treatment_info,soja_management.group_soja_manager,1,1,1,1
+access_soja_bank_info_manager,soja.bank.info manager,model_soja_bank_info,soja_management.group_soja_manager,1,1,1,1
+access_stock_quant_soja_manager,stock.quant SOJA manager,stock.model_stock_quant,soja_management.group_soja_manager,1,1,1,1
+access_stock_location_soja_manager,stock.location SOJA manager,stock.model_stock_location,soja_management.group_soja_manager,1,1,1,1
+access_stock_quant_soja_cooperative,stock.quant SOJA cooperative,stock.model_stock_quant,soja_management.group_soja_cooperative,1,0,0,0
+access_stock_quant_soja_factory,stock.quant SOJA factory,stock.model_stock_quant,soja_management.group_soja_factory,1,0,0,0
+access_stock_quant_soja_bank,stock.quant SOJA bank,stock.model_stock_quant,soja_management.group_soja_bank,1,0,0,0
+access_stock_location_soja_cooperative,stock.location SOJA cooperative,stock.model_stock_location,soja_management.group_soja_cooperative,1,0,0,0
+access_stock_location_soja_factory,stock.location SOJA factory,stock.model_stock_location,soja_management.group_soja_factory,1,0,0,0
+access_stock_location_soja_bank,stock.location SOJA bank,stock.model_stock_location,soja_management.group_soja_bank,1,0,0,0
+access_mrp_production_soja_manager,mrp.production SOJA manager,mrp.model_mrp_production,soja_management.group_soja_manager,1,1,1,1

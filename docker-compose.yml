@@ -1,0 +1,4 @@
+name: odoo-soja-local
+
+include:
+  - ./docker-compose.odoo.local.yml

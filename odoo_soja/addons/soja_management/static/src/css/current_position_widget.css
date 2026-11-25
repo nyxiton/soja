@@ -1,0 +1,14 @@
+.o_soja_current_position {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.o_soja_point_sequence {
+    min-width: 22px;
+    font-weight: 600;
+}
+
+.o_soja_geo_button {
+    white-space: nowrap;
+}

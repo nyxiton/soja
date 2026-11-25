@@ -1,0 +1,52 @@
+name: odoo-soja-local
+
+x-odoo: &odoo
+  image: odoo:17.0
+  environment:
+    HOST: odoo_db
+    PORT: 5432
+    USER: ${ODOO_POSTGRES_USER:-odoo}
+    PASSWORD: ${ODOO_POSTGRES_PASSWORD:-odoo}
+  volumes:
+    - odoo_soja_web_data:/var/lib/odoo
+    - ./odoo_soja/config/odoo.conf:/etc/odoo/odoo.conf:ro
+    - ./odoo_soja/addons:/mnt/extra-addons:ro
+
+services:
+  odoo_db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${ODOO_POSTGRES_DB:-postgres}
+      POSTGRES_USER: ${ODOO_POSTGRES_USER:-odoo}
+      POSTGRES_PASSWORD: ${ODOO_POSTGRES_PASSWORD:-odoo}
+    volumes:
+      - odoo_soja_db_data:/var/lib/postgresql/data
+    ports:
+      - "${ODOO_POSTGRES_PUBLIC_PORT:-5434}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${ODOO_POSTGRES_USER:-odoo} -d ${ODOO_POSTGRES_DB:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  odoo_init:
+    <<: *odoo
+    command: ["odoo", "-d", "odoo_soja", "-i", "soja_management", "--without-demo=all", "--stop-after-init", "--no-http"]
+    depends_on:
+      odoo_db:
+        condition: service_healthy
+
+  odoo:
+    <<: *odoo
+    restart: unless-stopped
+    command: ["odoo", "-d", "odoo_soja", "--db-filter=^odoo_soja$"]
+    depends_on:
+      odoo_init:
+        condition: service_completed_successfully
+    ports:
+      - "${ODOO_PUBLIC_PORT:-8069}:8069"
+
+volumes:
+  odoo_soja_db_data:
+  odoo_soja_web_data:

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="cooperative_save" model="res.partner">
+        <field name="name">Cooperative Agricole de Save</field>
+        <field name="is_company" eval="True"/>
+        <field name="company_type">company</field>
+        <field name="is_soja_cooperative" eval="True"/>
+    </record>
+
+    <record id="cooperative_borgou" model="res.partner">
+        <field name="name">Union Agricole Borgou</field>
+        <field name="is_company" eval="True"/>
+        <field name="company_type">company</field>
+        <field name="is_soja_cooperative" eval="True"/>
+    </record>
+
+    <record id="factory_soja_centre" model="res.partner">
+        <field name="name">Usine Soja Centre</field>
+        <field name="is_company" eval="True"/>
+        <field name="company_type">company</field>
+        <field name="is_soja_factory" eval="True"/>
+    </record>
+
+    <record id="bank_agri_benin" model="res.partner">
+        <field name="name">Banque Agricole Benin</field>
+        <field name="is_company" eval="True"/>
+        <field name="company_type">company</field>
+        <field name="is_soja_bank" eval="True"/>
+    </record>
+
+    <record id="producer_jean_koffi" model="res.partner">
+        <field name="is_soja_producer" eval="True"/>
+        <field name="soja_external_id">EX-BENIN-001</field>
+        <field name="name">Jean Koffi</field>
+        <field name="soja_zone">Benin - Save</field>
+        <field name="soja_coop">Cooperative Agricole de Save</field>
+        <field name="soja_cooperative_id" ref="cooperative_save"/>
+        <field name="soja_soy">conventional</field>
+        <field name="soja_tenure">owner</field>
+        <field name="phone">+229 90 11 22 33</field>
+        <field name="email">jean.koffi@example.com</field>
+        <field name="soja_fertilizer">seed</field>
+        <field name="soja_pesticide">none</field>
+        <field name="soja_area_ha">4.50</field>
+        <field name="soja_centroid_lon">2.415000</field>
+        <field name="soja_centroid_lat">8.015000</field>
+    </record>
+
+    <record id="producer_pauline_hounkpatin" model="res.partner">
+        <field name="is_soja_producer" eval="True"/>
+        <field name="soja_external_id">EX-BENIN-002</field>
+        <field name="name">Pauline Hounkpatin</field>
+        <field name="soja_zone">Benin - Parakou</field>
+        <field name="soja_coop">Union Agricole Borgou</field>
+        <field name="soja_cooperative_id" ref="cooperative_borgou"/>
+        <field name="soja_soy">conventional</field>
+        <field name="soja_tenure">rental</field>
+        <field name="phone">+229 91 22 33 44</field>
+        <field name="email">pauline.h@example.com</field>
+        <field name="soja_fertilizer">k2so4</field>
+        <field name="soja_pesticide">selective</field>
+        <field name="soja_area_ha">3.20</field>
+        <field name="soja_centroid_lon">2.621000</field>
+        <field name="soja_centroid_lat">9.331000</field>
+    </record>
+
+    <record id="exploitation_jean_save" model="soja.exploitation">
+        <field name="name">Exploitation Jean Koffi - Save</field>
+        <field name="producer_id" ref="producer_jean_koffi"/>
+        <field name="zone">Benin - Save</field>
+        <field name="area_ha">4.50</field>
+        <field name="centroid_lon">2.415000</field>
+        <field name="centroid_lat">8.015000</field>
+    </record>
+
+    <record id="exploitation_pauline_borgou" model="soja.exploitation">
+        <field name="name">Exploitation Pauline Hounkpatin - Borgou</field>
+        <field name="producer_id" ref="producer_pauline_hounkpatin"/>
+        <field name="zone">Benin - Parakou</field>
+        <field name="area_ha">3.20</field>
+        <field name="centroid_lon">2.621000</field>
+        <field name="centroid_lat">9.331000</field>
+    </record>
+
+    <record id="plot_jean_1" model="soja.plot.point">
+        <field name="partner_id" ref="producer_jean_koffi"/>
+        <field name="exploitation_id" ref="exploitation_jean_save"/>
+        <field name="sequence">1</field>
+        <field name="longitude">2.410000</field>
+        <field name="latitude">8.020000</field>
+    </record>
+    <record id="plot_jean_2" model="soja.plot.point">
+        <field name="partner_id" ref="producer_jean_koffi"/>
+        <field name="exploitation_id" ref="exploitation_jean_save"/>
+        <field name="sequence">2</field>
+        <field name="longitude">2.420000</field>
+        <field name="latitude">8.020000</field>
+    </record>
+    <record id="plot_jean_3" model="soja.plot.point">
+        <field name="partner_id" ref="producer_jean_koffi"/>
+        <field name="exploitation_id" ref="exploitation_jean_save"/>
+        <field name="sequence">3</field>
+        <field name="longitude">2.420000</field>
+        <field name="latitude">8.010000</field>
+    </record>
+    <record id="plot_jean_4" model="soja.plot.point">
+        <field name="partner_id" ref="producer_jean_koffi"/>
+        <field name="exploitation_id" ref="exploitation_jean_save"/>
+        <field name="sequence">4</field>
+        <field name="longitude">2.410000</field>
+        <field name="latitude">8.010000</field>
+    </record>
+
+    <record id="harvest_jean_2024_2025" model="soja.harvest">
+        <field name="partner_id" ref="producer_jean_koffi"/>
+        <field name="exploitation_id" ref="exploitation_jean_save"/>
+        <field name="cooperative_partner_id" ref="cooperative_save"/>
+        <field name="bank_partner_id" ref="bank_agri_benin"/>
+        <field name="campaign">2024 - 2025</field>
+        <field name="seed_date">2025-06-20</field>
+        <field name="harvest_forecast_date">2025-09-25</field>
+        <field name="harvest_actual_date">2025-10-05</field>
+        <field name="yield_tha">2.20</field>
+        <field name="forecast_t">9.90</field>
+        <field name="actual_yield_tha">2.02</field>
+        <field name="actual_t">9.11</field>
+        <field name="share_status">partners</field>
+        <field name="service_drone" eval="True"/>
+        <field name="service_finance" eval="True"/>
+        <field name="stock_type">total</field>
+        <field name="stock_qty_t">9.11</field>
+        <field name="stock_date">2025-10-06</field>
+    </record>
+
+    <record id="harvest_pauline_2024_2025" model="soja.harvest">
+        <field name="partner_id" ref="producer_pauline_hounkpatin"/>
+        <field name="exploitation_id" ref="exploitation_pauline_borgou"/>
+        <field name="cooperative_partner_id" ref="cooperative_borgou"/>
+        <field name="factory_partner_id" ref="factory_soja_centre"/>
+        <field name="campaign">2024 - 2025</field>
+        <field name="seed_date">2025-06-27</field>
+        <field name="harvest_forecast_date">2025-10-01</field>
+        <field name="harvest_actual_date">2025-10-12</field>
+        <field name="yield_tha">2.00</field>
+        <field name="forecast_t">6.40</field>
+        <field name="actual_yield_tha">1.84</field>
+        <field name="actual_t">5.89</field>
+        <field name="share_status">partners</field>
+        <field name="service_drone" eval="True"/>
+        <field name="service_soil" eval="True"/>
+        <field name="factory_dehull" eval="True"/>
+        <field name="factory_process_date">2025-10-18</field>
+    </record>
+</odoo>

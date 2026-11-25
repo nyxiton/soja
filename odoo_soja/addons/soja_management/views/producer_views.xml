@@ -1,0 +1,526 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_users_form_soja_cooperative" model="ir.ui.view">
+        <field name="name">res.users.form.soja.cooperative</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[contains(@class, 'oe_title')]" position="after">
+                <group string="Rattachements SOJA">
+                    <field name="soja_cooperative_id"/>
+                    <field name="soja_factory_id"/>
+                    <field name="soja_bank_id"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_soja_producer_tree" model="ir.ui.view">
+        <field name="name">res.partner.soja.producer.tree</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <tree string="Producteurs SOJA" default_order="create_date desc">
+                <field name="soja_external_id"/>
+                <field name="name"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <field name="soja_zone"/>
+                <field name="soja_cooperative_id"/>
+                <field name="soja_exploitation_api_identifiers"/>
+                <field name="soja_soy"/>
+                <field name="soja_exploitation_count"/>
+                <field name="soja_total_area_ha"/>
+                <field name="soja_latest_campaign"/>
+                <field name="soja_latest_forecast_t"/>
+                <field name="soja_latest_actual_t"/>
+                <field name="soja_latest_share_status"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_soja_producer_form" model="ir.ui.view">
+        <field name="name">res.partner.soja.producer.form</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <form string="Producteur SOJA">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_soja_documents" type="object" class="oe_stat_button" icon="fa-paperclip">
+                            <field name="soja_attachment_count" string="Documents" widget="statinfo"/>
+                        </button>
+                        <button name="action_open_soja_tasks" type="object" class="oe_stat_button" icon="fa-tasks">
+                            <field name="soja_task_count" string="Taches" widget="statinfo"/>
+                        </button>
+                        <button name="action_open_soja_exploitations" type="object" class="oe_stat_button" icon="fa-map">
+                            <field name="soja_exploitation_count" string="Exploitations" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <field name="is_soja_producer" invisible="1"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Nom du producteur"/></h1>
+                    </div>
+                    <group>
+                        <group string="Contact Odoo">
+                            <field name="soja_external_id"/>
+                            <field name="soja_exploitation_api_identifiers" readonly="1"/>
+                            <field name="soja_user_id"/>
+                            <field name="is_soja_cooperative"/>
+                            <field name="is_soja_factory"/>
+                            <field name="is_soja_bank"/>
+                            <field name="phone"/>
+                            <field name="email"/>
+                            <field name="company_type"/>
+                            <field name="category_id" widget="many2many_tags"/>
+                        </group>
+                        <group string="Identite SOJA">
+                            <field name="soja_soy"/>
+                            <field name="soja_tenure"/>
+                            <field name="soja_sex"/>
+                            <field name="soja_age"/>
+                            <field name="soja_identity_photo" widget="image"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Cooperative">
+                            <field name="soja_zone"/>
+                            <field name="soja_cooperative_id" context="{'default_is_company': True, 'default_company_type': 'company', 'default_is_soja_cooperative': True}"/>
+                            <field name="soja_coop" invisible="1"/>
+                            <field name="soja_department"/>
+                            <field name="soja_coop_president"/>
+                            <field name="soja_coop_president_phone"/>
+                        </group>
+                        <group string="Intrants et finance">
+                            <field name="soja_credit_ongoing"/>
+                            <field name="soja_fertilizer"/>
+                            <field name="soja_pesticide"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Exploitations">
+                            <field name="soja_exploitation_ids" context="{'default_producer_id': id}">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="soja_api_identifier" readonly="1"/>
+                                    <field name="soja_zone"/>
+                                    <field name="project_id" readonly="1"/>
+                                    <field name="soja_area_ha"/>
+                                    <field name="soja_centroid_lon"/>
+                                    <field name="soja_centroid_lat"/>
+                                </tree>
+                            </field>
+                            <group>
+                                <field name="soja_total_area_ha"/>
+                            </group>
+                        </page>
+                        <page string="Semence et recolte">
+                            <field name="soja_harvest_ids" context="{'default_partner_id': id}">
+                                <tree editable="bottom">
+                                    <field name="campaign"/>
+                                    <field name="exploitation_id" domain="[('producer_id', '=', parent.id)]"/>
+                                    <field name="seed_date"/>
+                                    <field name="harvest_forecast_date"/>
+                                    <field name="harvest_actual_date"/>
+                                    <field name="yield_tha"/>
+                                    <field name="forecast_t"/>
+                                    <field name="actual_yield_tha"/>
+                                    <field name="actual_t"/>
+                                    <field name="share_status"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_soja_producer_kanban" model="ir.ui.view">
+        <field name="name">res.partner.soja.producer.kanban</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="soja_zone"/>
+                <field name="soja_cooperative_id"/>
+                <field name="soja_exploitation_count"/>
+                <field name="soja_total_area_ha"/>
+                <field name="soja_latest_campaign"/>
+                <field name="soja_latest_forecast_t"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <strong><field name="name"/></strong>
+                            <div><field name="soja_zone"/></div>
+                            <div><field name="soja_cooperative_id"/></div>
+                            <div>Exploitations: <field name="soja_exploitation_count"/></div>
+                            <div>Surface totale: <field name="soja_total_area_ha"/> ha</div>
+                            <div>Campagne: <field name="soja_latest_campaign"/></div>
+                            <div>Prévision: <field name="soja_latest_forecast_t"/> t</div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_soja_producer_search" model="ir.ui.view">
+        <field name="name">res.partner.soja.producer.search</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <search string="Producteurs SOJA">
+                <field name="name"/>
+                <field name="soja_external_id"/>
+                <field name="soja_zone"/>
+                <field name="soja_cooperative_id"/>
+                <filter string="Bio" name="organic" domain="[('soja_soy', '=', 'organic')]"/>
+                <filter string="Conventionnel" name="conventional" domain="[('soja_soy', '=', 'conventional')]"/>
+                <group expand="0" string="Regrouper par">
+                    <filter string="Cooperative" name="group_coop" context="{'group_by': 'soja_cooperative_id'}"/>
+                    <filter string="Zone" name="group_zone" context="{'group_by': 'soja_zone'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_soja_producer" model="ir.actions.act_window">
+        <field name="name">Producteurs</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_ids" eval="[(5, 0, 0), (0, 0, {'view_mode': 'tree', 'view_id': ref('view_soja_producer_tree')}), (0, 0, {'view_mode': 'kanban', 'view_id': ref('view_soja_producer_kanban')}), (0, 0, {'view_mode': 'form', 'view_id': ref('view_soja_producer_form')})]"/>
+        <field name="domain">[('is_soja_producer', '=', True)]</field>
+        <field name="context">{'default_is_soja_producer': True, 'default_company_type': 'person'}</field>
+        <field name="search_view_id" ref="view_soja_producer_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Creer un contact producteur SOJA.</p>
+        </field>
+    </record>
+
+    <record id="view_soja_exploitation_tree" model="ir.ui.view">
+        <field name="name">soja.exploitation.tree</field>
+        <field name="model">soja.exploitation</field>
+        <field name="arch" type="xml">
+            <tree string="Exploitations SOJA" default_order="create_date desc">
+                <field name="name"/>
+                <field name="api_identifier"/>
+                <field name="producer_id"/>
+                <field name="project_id"/>
+                <field name="zone"/>
+                <field name="area_ha"/>
+                <field name="centroid_lon"/>
+                <field name="centroid_lat"/>
+                <field name="harvest_count"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_soja_exploitation_form" model="ir.ui.view">
+        <field name="name">soja.exploitation.form</field>
+        <field name="model">soja.exploitation</field>
+        <field name="arch" type="xml">
+            <form string="Exploitation SOJA">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_soja_harvests" type="object" class="oe_stat_button" icon="fa-leaf">
+                            <field name="soja_harvest_count" string="Campagnes" widget="statinfo"/>
+                        </button>
+                        <button name="action_open_project" type="object" class="oe_stat_button" icon="fa-tasks">
+                            <field name="project_id" string="Projet" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <button name="action_update_osm_zone" type="object" class="btn btn-secondary" icon="fa-map-marker">
+                            Récupérer zone OSM
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="api_identifier" readonly="1"/>
+                            <field name="producer_id"/>
+                            <field name="project_id" readonly="1"/>
+                            <field name="zone"/>
+                        </group>
+                        <group>
+                            <field name="area_ha"/>
+                            <field name="centroid_lon"/>
+                            <field name="centroid_lat"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Points GPS">
+                            <field name="point_ids" context="{'default_exploitation_id': id, 'default_partner_id': producer_id}">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="soja_current_position"/>
+                                    <field name="partner_id"/>
+                                    <field name="longitude"/>
+                                    <field name="latitude"/>
+                                    <field name="osm_situation" force_save="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Saisons de récolte">
+                            <field name="harvest_product_ids" readonly="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="default_code"/>
+                                    <field name="soja_project_id"/>
+                                    <field name="soja_campaign"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Stockages">
+                            <field name="storage_quant_ids" readonly="1">
+                                <tree>
+                                    <field name="product_id" readonly="1"/>
+                                    <field name="company_id" invisible="1"/>
+                                    <field name="location_id"/>
+                                    <field name="soja_cooperative_partner_id" domain="[('is_company', '=', True), ('is_soja_cooperative', '=', True)]"/>
+                                    <field name="quantity"/>
+                                    <field name="soja_storage_type"/>
+                                    <field name="soja_storage_date"/>
+                                    <field name="soja_storage_note"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Traitements usine">
+                            <field name="treatment_info_ids" context="{'default_soja_exploitation_id': id}">
+                                <tree editable="bottom">
+                                    <field name="company_id" invisible="1"/>
+                                    <field name="soja_partner_id" readonly="1"/>
+                                    <field name="factory_partner_id" groups="soja_management.group_soja_manager" domain="[('is_company', '=', True), ('is_soja_factory', '=', True)]"/>
+                                    <field name="soja_storage_source_id" domain="[('soja_exploitation_id', '=', parent.id)]"/>
+                                    <field name="soja_dehull"/>
+                                    <field name="soja_grind"/>
+                                    <field name="soja_process_date"/>
+                                    <field name="soja_process_note"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Dossiers bancaires">
+                            <field name="bank_info_ids" context="{'default_soja_exploitation_id': id, 'default_type': 'opportunity'}">
+                                <tree editable="bottom">
+                                    <field name="soja_partner_id" readonly="1"/>
+                                    <field name="soja_bank_partner_id" groups="soja_management.group_soja_manager" domain="[('is_company', '=', True), ('is_soja_bank', '=', True)]"/>
+                                    <field name="soja_borrower_type"/>
+                                    <field name="soja_borrower_name"/>
+                                    <field name="soja_requested_amount"/>
+                                    <field name="soja_approved_amount"/>
+                                    <field name="soja_risk_level"/>
+                                    <field name="soja_decision_status"/>
+                                    <field name="soja_decision_date"/>
+                                    <field name="soja_financing_note"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_crm_lead_form_soja_financing" model="ir.ui.view">
+        <field name="name">crm.lead.form.soja.financing</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='description']" position="before">
+                <group string="Dossier bancaire SOJA" invisible="not soja_bank_partner_id">
+                    <field name="soja_partner_id"/>
+                    <field name="soja_exploitation_id"/>
+                    <field name="soja_harvest_id"/>
+                    <field name="soja_bank_partner_id"/>
+                    <field name="soja_borrower_type"/>
+                    <field name="soja_borrower_name"/>
+                    <field name="soja_requested_amount"/>
+                    <field name="soja_approved_amount"/>
+                    <field name="soja_risk_level"/>
+                    <field name="soja_decision_status"/>
+                    <field name="soja_decision_date"/>
+                    <field name="soja_financing_note"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_crm_lead_tree_soja_financing" model="ir.ui.view">
+        <field name="name">crm.lead.tree.soja.financing</field>
+        <field name="model">crm.lead</field>
+        <field name="arch" type="xml">
+            <tree string="Dossiers bancaires SOJA" default_order="create_date desc">
+                <field name="name"/>
+                <field name="soja_partner_id"/>
+                <field name="soja_exploitation_id"/>
+                <field name="soja_harvest_id"/>
+                <field name="soja_bank_partner_id"/>
+                <field name="soja_borrower_type"/>
+                <field name="soja_borrower_name"/>
+                <field name="soja_requested_amount"/>
+                <field name="soja_approved_amount"/>
+                <field name="soja_risk_level"/>
+                <field name="stage_id"/>
+                <field name="soja_decision_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_crm_lead_search_soja_financing" model="ir.ui.view">
+        <field name="name">crm.lead.search.soja.financing</field>
+        <field name="model">crm.lead</field>
+        <field name="arch" type="xml">
+            <search string="Dossiers bancaires SOJA">
+                <field name="name"/>
+                <field name="soja_partner_id"/>
+                <field name="soja_exploitation_id"/>
+                <field name="soja_harvest_id"/>
+                <field name="soja_bank_partner_id"/>
+                <field name="soja_borrower_name"/>
+                <filter string="Avec montant demandé" name="requested_amount" domain="[('soja_requested_amount', '&gt;', 0)]"/>
+                <filter string="Avec montant approuvé" name="approved_amount" domain="[('soja_approved_amount', '&gt;', 0)]"/>
+                <group expand="0" string="Regrouper par">
+                    <filter string="Banque" name="group_bank" context="{'group_by': 'soja_bank_partner_id'}"/>
+                    <filter string="Exploitation" name="group_exploitation" context="{'group_by': 'soja_exploitation_id'}"/>
+                    <filter string="Étape" name="group_stage" context="{'group_by': 'stage_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_soja_bank_dossiers" model="ir.actions.act_window">
+        <field name="name">Dossiers bancaires</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_ids" eval="[(5, 0, 0), (0, 0, {'view_mode': 'tree', 'view_id': ref('view_crm_lead_tree_soja_financing')}), (0, 0, {'view_mode': 'form', 'view_id': ref('crm.crm_lead_view_form')})]"/>
+        <field name="domain">[('soja_bank_partner_id', '!=', False)]</field>
+        <field name="context">{'default_type': 'opportunity', 'search_default_group_bank': 1}</field>
+        <field name="search_view_id" ref="view_crm_lead_search_soja_financing"/>
+    </record>
+
+    <record id="view_soja_exploitation_search" model="ir.ui.view">
+        <field name="name">soja.exploitation.search</field>
+        <field name="model">soja.exploitation</field>
+        <field name="arch" type="xml">
+            <search string="Exploitations SOJA">
+                <field name="name"/>
+                <field name="producer_id"/>
+                <field name="zone"/>
+                <group expand="0" string="Regrouper par">
+                    <filter string="Producteur" name="group_owner" context="{'group_by': 'producer_id'}"/>
+                    <filter string="Zone" name="group_zone" context="{'group_by': 'zone'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_soja_exploitation" model="ir.actions.act_window">
+        <field name="name">Exploitations</field>
+        <field name="res_model">soja.exploitation</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_ids" eval="[(5, 0, 0), (0, 0, {'view_mode': 'tree', 'view_id': ref('view_soja_exploitation_tree')}), (0, 0, {'view_mode': 'form', 'view_id': ref('view_soja_exploitation_form')})]"/>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="search_view_id" ref="view_soja_exploitation_search"/>
+    </record>
+
+    <record id="view_soja_harvest_product_tree" model="ir.ui.view">
+        <field name="name">product.product.tree.soja.harvest.product</field>
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <tree string="Saisons de récolte SOJA" default_order="soja_campaign desc, create_date desc">
+                <field name="name"/>
+                <field name="default_code"/>
+                <field name="soja_exploitation_id"/>
+                <field name="soja_project_id"/>
+                <field name="soja_campaign"/>
+                <field name="soja_harvest_count"/>
+                <field name="qty_available"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_soja_harvest_product_form" model="ir.ui.view">
+        <field name="name">product.product.form.soja.harvest.product</field>
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <form string="Saison de récolte SOJA">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_soja_harvests" type="object" class="oe_stat_button" icon="fa-leaf">
+                            <field name="soja_harvest_count" string="Récoltes" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="default_code"/>
+                            <field name="soja_exploitation_id"/>
+                            <field name="soja_project_id"/>
+                            <field name="soja_campaign"/>
+                        </group>
+                        <group>
+                            <field name="type"/>
+                            <field name="tracking"/>
+                            <field name="purchase_ok"/>
+                            <field name="sale_ok"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Récoltes">
+                            <field name="soja_harvest_ids" readonly="1">
+                                <tree>
+                                    <field name="partner_id"/>
+                                    <field name="exploitation_id"/>
+                                    <field name="campaign"/>
+                                    <field name="seed_date"/>
+                                    <field name="harvest_forecast_date"/>
+                                    <field name="harvest_actual_date"/>
+                                    <field name="forecast_t"/>
+                                    <field name="actual_t"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_soja_harvest_product_search" model="ir.ui.view">
+        <field name="name">product.product.search.soja.harvest.product</field>
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <search string="Saisons de récolte SOJA">
+                <field name="name"/>
+                <field name="default_code"/>
+                <field name="soja_exploitation_id"/>
+                <field name="soja_project_id"/>
+                <field name="soja_campaign"/>
+                <group expand="0" string="Regrouper par">
+                    <filter string="Exploitation" name="group_exploitation" context="{'group_by': 'soja_exploitation_id'}"/>
+                    <filter string="Projet" name="group_project" context="{'group_by': 'soja_project_id'}"/>
+                    <filter string="Campagne" name="group_campaign" context="{'group_by': 'soja_campaign'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_soja_harvest_product" model="ir.actions.act_window">
+        <field name="name">Saisons de récolte</field>
+        <field name="res_model">product.product</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_ids" eval="[(5, 0, 0), (0, 0, {'view_mode': 'tree', 'view_id': ref('view_soja_harvest_product_tree')}), (0, 0, {'view_mode': 'form', 'view_id': ref('view_soja_harvest_product_form')})]"/>
+        <field name="domain">[('is_soja_harvest_product', '=', True)]</field>
+        <field name="context">{'default_is_soja_harvest_product': True, 'search_default_group_exploitation': 1}</field>
+        <field name="search_view_id" ref="view_soja_harvest_product_search"/>
+    </record>
+
+    <menuitem id="menu_soja_exploitation_product_catalog"
+              name="Exploitations SOJA"
+              parent="sale.product_menu_catalog"
+              action="action_soja_exploitation"
+              sequence="95"/>
+</odoo>
