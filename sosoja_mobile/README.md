@@ -1,6 +1,6 @@
 # SoSoja Mobile
 
-Une application Android minimaliste servant de wrapper pour le site https://www.sosoja.com.
+Une application Flutter pour Android, iPhone et iPad qui ouvre SoSoja dans une WebView.
 
 ## Prérequis
 - Flutter SDK installé sur votre machine.
@@ -17,6 +17,29 @@ Une application Android minimaliste servant de wrapper pour le site https://www.
    flutter build apk --release
    ```
 L'APK sera disponible dans `build/app/outputs/flutter-apk/app-release.apk`.
+
+## Tester sur iOS
+
+Sur un Mac équipé de Flutter, Xcode avec un simulateur iOS et CocoaPods, lancez ces commandes depuis `sosoja_mobile` :
+
+```bash
+flutter pub get
+open -a Simulator
+flutter devices
+flutter run -d <identifiant-du-simulateur>
+```
+
+## Tester sur un iPad ou un iPhone physique
+
+Lancez Odoo avec Docker sur le Mac et connectez les deux appareils au même réseau. Dans **Réglages Système → Général → Partage** sur le Mac, relevez son nom d’hôte local en `.local`. Sur l’iPad, vérifiez dans Safari que l’adresse `http://nom-du-mac.local:8069/soja` ouvre Odoo.
+
+Ouvrez `ios/Runner.xcworkspace` après l’installation des dépendances iOS et sélectionnez votre équipe Apple dans **Signing & Capabilities**. Le bundle ID par défaut est `com.sosoja.app`. Lancez ensuite l’application en remplaçant le nom d’hôte et l’identifiant de l’iPad :
+
+```bash
+flutter run -d <identifiant-ipad> --dart-define=SOSOJA_URL=http://nom-du-mac.local:8069/soja
+```
+
+Sur l’iPad, autorisez SoSoja à accéder au réseau local lorsqu’iPadOS le demande. Le simulateur iOS utilise par défaut `http://localhost:8069/soja`.
 
 ## Configuration technique
 - **Package Name :** `com.sosoja.app`

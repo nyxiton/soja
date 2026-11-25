@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -31,11 +32,16 @@ class BrowserPage extends StatefulWidget {
 }
 
 class _BrowserPageState extends State<BrowserPage> {
+  static const _configuredUrl = String.fromEnvironment('SOSOJA_URL');
   late final WebViewController _controller;
 
   @override
   void initState() {
     super.initState();
+    final defaultUrl = defaultTargetPlatform == TargetPlatform.iOS
+        ? 'http://localhost:8069/soja'
+        : 'https://www.sosoja.com';
+    final url = _configuredUrl.isEmpty ? defaultUrl : _configuredUrl;
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0x00000000))
@@ -52,7 +58,7 @@ class _BrowserPageState extends State<BrowserPage> {
           },
         ),
       )
-      ..loadRequest(Uri.parse('https://www.sosoja.com'));
+      ..loadRequest(Uri.parse(url));
   }
 
   @override
